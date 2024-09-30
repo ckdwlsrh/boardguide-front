@@ -7,7 +7,7 @@ import SafeInputView from "../components/SafeInputView";
 import { signin } from "../service/Apiservice";
 
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({navigation , setUser}) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
@@ -20,6 +20,7 @@ const SignInScreen = ({navigation}) => {
   const onSubmit = () => {
     Keyboard.dismiss();
     signin({userId: userId, password: password});
+    setUser(userId);
     console.log(userId, password);
   };
   const toSignUp = () => {

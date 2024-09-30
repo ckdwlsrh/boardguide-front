@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
-export function call(api, method, request) {
+export async function call(api, method, request) {
   let options ={
     headers: new Headers({
         "Content-Type": "application/json",
@@ -23,9 +23,9 @@ export function call(api, method, request) {
     options.body = JSON.stringify(request);
   }
 
-  return fetch(options.url, options)
+  return await fetch(options.url, options)
   .then((response) => response.json().then((json) => {
-    if(!response.ok()){
+    if(!response.ok){
         return Promise.reject(json);
     }
     return json;
@@ -39,12 +39,15 @@ export function call(api, method, request) {
 }
 
 export function signin(userDTO) {
+  console.log("token");
   return call("/auth/signin","POST", userDTO)
   .then((response) => {
-    if (!response.token) {
+    if (response.token) {
         SecureStore.setItem(ACCESS_TOKEN, response.token);
+        console.log(response.token);
         console.log("saved token");
         // redirection
+
     }
   })
 }

@@ -6,15 +6,18 @@ import { StyleSheet, Text, View } from 'react-native';
 import SignInScreen from './screen/SignInScrean';
 import { WHITE } from './colors';
 import AuthStack from './navigations/AuthStack';
+import { useState } from 'react';
+import MainStack from './navigations/MainStack';
 
 const App = () => {
   const name = "changjin";
   console.log(name);
+  const [user, setUser] = useState(null);
   
   return (
     <NavigationContainer>
         <StatusBar style='dark'/>
-        <AuthStack />
+        {user ? (<MainStack user={user} setUser={setUser} />) : (<AuthStack user={user} setUser={setUser} />) }
     </NavigationContainer>
   );
 }
