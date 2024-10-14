@@ -9,7 +9,7 @@ const MainStack = () => {
     screenOptions={
         {
             contentStyle: {backgroundColor: WHITE},
-            headerShown: false,
+            headerShown: true,
         }
     }>
         <Stack.Screen name="ListScreen" component={ListScreen}/>

@@ -8,17 +8,25 @@ import { WHITE } from './colors';
 import AuthStack from './navigations/AuthStack';
 import { useState } from 'react';
 import MainStack from './navigations/MainStack';
+import * as SecureStore from "expo-secure-store";
+import { ACCESS_TOKEN } from './service/Apiservice';
+import { UserProvider } from './contexts/UserContext';
+import Navigation from './navigations/Navigation';
 
 const App = () => {
-  const name = "changjin";
-  console.log(name);
-  const [user, setUser] = useState(null);
-  
+  SecureStore.deleteItemAsync("userId");
+  SecureStore.deleteItemAsync(ACCESS_TOKEN);
+  const today = new Date();
+  if(today.getTime() > parseInt(SecureStore.getItem("exp")) + 86400000000) {
+    console.log("check");
+    SecureStore.deleteItemAsync("userId");
+    SecureStore.deleteItemAsync(ACCESS_TOKEN);
+  }
   return (
-    <NavigationContainer>
+    <UserProvider>
         <StatusBar style='dark'/>
-        {user ? (<MainStack user={user} setUser={setUser} />) : (<AuthStack user={user} setUser={setUser} />) }
-    </NavigationContainer>
+        <Navigation />
+    </UserProvider>
   );
 }
 

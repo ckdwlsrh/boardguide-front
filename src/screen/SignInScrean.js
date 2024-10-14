@@ -1,13 +1,19 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from "react-native";
-import Input, { InputTypes, ReturnKeyTypes } from "../components/Input";
+import Input, { InputStyles, InputTypes, ReturnKeyTypes } from "../components/Input";
 import Button from "../components/Button";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import SafeInputView from "../components/SafeInputView";
-import { signin } from "../service/Apiservice";
+import { ACCESS_TOKEN, signin } from "../service/Apiservice";
+import * as SecureStore from "expo-secure-store";
+import UserContext from "../contexts/UserContext";
 
 
-const SignInScreen = ({navigation , setUser}) => {
+const SignInScreen = ({navigation}) => {
+
+  const { setUser } = useContext(UserContext);
+  setUser(SecureStore.getItem("userId"));
+  
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
@@ -17,11 +23,11 @@ const SignInScreen = ({navigation , setUser}) => {
     setDisabled(!(userId && password));
   }, [userId, password]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     Keyboard.dismiss();
-    signin({userId: userId, password: password});
-    setUser(userId);
-    console.log(userId, password);
+    await signin({userId: userId, password: password});
+    const user = SecureStore.getItemAsync("userId");
+    setUser(user);
   };
   const toSignUp = () => {
     Keyboard.dismiss();
@@ -32,11 +38,11 @@ const SignInScreen = ({navigation , setUser}) => {
         <View style={styles.container}>
           <Image source={require('../../assets/board_icon.png')}
                  style={styles.image} />
-          <Input inputType={InputTypes.USERID} returnKeyType={ReturnKeyTypes.NEXT}
+          <Input inputType={InputTypes.USERID} inputStyle={InputStyles.DEFAULT} returnKeyType={ReturnKeyTypes.NEXT}
                  value={userId}
                  onSubmitEditing={() => passwordRef.current.focus()}
                  onChangeText={(userId) => {setUserId(userId.trim())}} />
-          <Input inputType={InputTypes.PASSWORD} returnKeyType={ReturnKeyTypes.DONE}
+          <Input inputType={InputTypes.PASSWORD} inputStyle={InputStyles.DEFAULT} returnKeyType={ReturnKeyTypes.DONE}
                  value={password}
                  ref={passwordRef}
                  onSubmitEditing={onSubmit}
@@ -49,6 +55,7 @@ const SignInScreen = ({navigation , setUser}) => {
     </SafeInputView>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
