@@ -40,6 +40,7 @@ const VerticalList = ({ items , checked, setChecked}) => {
         console.log(checked)
     }
 
+
     return (
         <FlatList
             data={items}
@@ -59,6 +60,7 @@ const VerticalList = ({ items , checked, setChecked}) => {
                   <HorizontalList items={item.boardGames} />
               </View>
             )}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
              />
     );
 };
@@ -122,10 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   verticalItem: {
-    marginBottom: 20,
     heigth: 10,
-    borderRadius: 7,
-    borderColor: 'black',
   },
   loadingContainer: {
     flex: 1,
@@ -175,7 +174,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-  }
+  },
+  separator: {
+    height: 1,  // 구분선의 높이 (두께)
+    backgroundColor: '#cccccc',  // 구분선 색상
+  },
 });
 
 export default PreferGenre;

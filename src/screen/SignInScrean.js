@@ -11,7 +11,7 @@ import UserContext from "../contexts/UserContext";
 
 const SignInScreen = ({navigation}) => {
 
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   setUser(SecureStore.getItem("userId"));
   
   const [userId, setUserId] = useState('');
@@ -26,8 +26,9 @@ const SignInScreen = ({navigation}) => {
   const onSubmit = async () => {
     Keyboard.dismiss();
     await signin({userId: userId, password: password});
-    const user = SecureStore.getItemAsync("userId");
-    setUser(user);
+    const userid = SecureStore.getItemAsync("userId");
+    console.log(userid);
+    setUser(userid);
   };
   const toSignUp = () => {
     Keyboard.dismiss();

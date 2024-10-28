@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
-import { PRIMARY, WHITE } from "../colors";
+import { GRAY, PRIMARY, WHITE } from "../colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 

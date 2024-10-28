@@ -7,6 +7,7 @@ import * as SecureStore from "expo-secure-store";
 
 const Navigation =() => {
     const {user, setUser} = useContext(UserContext);
+    
     return (
         <NavigationContainer>
             {user ? <MainStack /> : <AuthStack />}

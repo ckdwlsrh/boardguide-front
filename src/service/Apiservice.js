@@ -3,10 +3,8 @@ import * as SecureStore from "expo-secure-store";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
-export async function call(api, method, request) {
-  let headers = new Headers({
-    "Content-Type": "application/json",
-  });
+export async function call(api, method, request, useFormData = false) {
+  let headers = new Headers();
 
   // 시큐어 스토리지에서 ACCESS TOKEN 가져오기
   const accessToken = SecureStore.getItem(ACCESS_TOKEN);
@@ -21,7 +19,15 @@ export async function call(api, method, request) {
   };
 
   if (request) {
-    options.body = JSON.stringify(request);
+    if (useFormData) {
+      // FormData를 사용할 때는 headers에 'Content-Type'을 지정하지 않음 (자동으로 설정됨)
+      options.body = request; // request는 FormData 객체
+    } else {
+      headers.append("Content-Type", "application/json");
+      options.body = JSON.stringify(request);
+    }
+  } else {
+    headers.append("Content-Type", "application/json");
   }
 
   return await fetch(options.url, options)
@@ -33,6 +39,7 @@ export async function call(api, method, request) {
   })).catch((error) => {
     console.log(error.status);
     if (error.status === 403) {
+        console.log("forbidden");
         //redirection
     }
     return Promise.reject(error);

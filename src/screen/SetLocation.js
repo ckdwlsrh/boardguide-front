@@ -78,7 +78,7 @@ const SetLocation = ({navigation , route}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>매칭 가능 지역을 설정해주세요.</Text>
-            <Text style={styles.headerText}>{address}</Text>
+            <Text style={styles.headerAddress}>{address}</Text>
             <View style={styles.mapContainer} >
                 {loading ? <Text>로딩 중...</Text> : <MapView
                         style={styles.map}
@@ -125,6 +125,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: GRAY,
+    },
+    headerAddress: {
+        marginTop: 30,
+        marginHorizontal: 30,
+        padding: 10,
+        textAlign: 'center', 
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: GRAY,
+        borderColor: '#f4511e',
+        borderWidth: 2,
+        borderRadius: 8,
     }
 });
 

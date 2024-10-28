@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { Button } from 'react-native';
+import { Button, LogBox } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import SignInScreen from './screen/SignInScrean';
 import { WHITE } from './colors';
@@ -14,10 +14,11 @@ import { UserProvider } from './contexts/UserContext';
 import Navigation from './navigations/Navigation';
 
 const App = () => {
+  LogBox.ignoreAllLogs();
   SecureStore.deleteItemAsync("userId");
   SecureStore.deleteItemAsync(ACCESS_TOKEN);
   const today = new Date();
-  if(today.getTime() > parseInt(SecureStore.getItem("exp")) + 86400000000) {
+  if(today.getTime() > parseInt(SecureStore.getItem("exp")) + 86400000) {
     console.log("check");
     SecureStore.deleteItemAsync("userId");
     SecureStore.deleteItemAsync(ACCESS_TOKEN);

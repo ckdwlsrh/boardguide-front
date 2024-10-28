@@ -12,6 +12,8 @@ export const ReturnKeyTypes = {
 export const InputTypes = {
     EMAIL: 'EMAIL',
     USERID: 'USERID',
+    SEARCHMAP: 'SEARCHMAP',
+    SEARCHBOARDGAME: 'SEARCHBOARDGAME',
     NICKNAME: 'NICKNAME',
     PASSWORD: 'PASSWORD',
     NEWPASSWORD: 'NEWPASSWORD',
@@ -20,6 +22,7 @@ export const InputTypes = {
 };
 export const InputStyles = {
     DEFAULT: 'DEFAULT',
+    SEARCH: 'SEARCH',
 };
 
 export const InputTypeProps ={
@@ -30,6 +33,20 @@ export const InputTypeProps ={
         textContentType: 'emailAddress',
         secureTextEntry: false,
         iconName: { active: 'email', inactive: 'email-outline'},
+    },
+    SEARCHMAP: {
+        placeholder: '주소로 검색해보세요.',
+        keyboardType: 'default',
+        textContentType: 'none',
+        secureTextEntry: false,
+        iconName: {acitve: 'map-search', inactive: 'map-search-outline'},
+    },
+    SEARCHBOARDGAME: {
+        placeholder: '보드게임 이름으로 검색해보세요.',
+        keyboardType: 'default',
+        textContentType: 'none',
+        secureTextEntry: false,
+        iconName: {acitve: 'toy-brick-search', inactive: 'toy-brick-search-outline'},
     },
     USERID: {
         title: '아이디',
@@ -114,6 +131,42 @@ export const InputStyleProps = {
             marginTop: 10,
             height: '100%',
             justifyContent: 'center',
+        },
+    }),
+    SEARCH: StyleSheet.create({
+        container: {
+            width: 350,
+            paddingLeft: 10,
+            marginVertical: 10,
+        },
+        title: {
+            display: 'none',
+        },
+        input: {
+            paddingHorizontal: 10,
+            paddingLeft: 10,
+            height: 42,
+            borderBottomColor: GRAY.DEFAULT,
+            borderBottomWidth: 1,
+        },
+        focusedInput: {
+            borderBottomWidth: 2,
+            borderBottomColor: PRIMARY.DEFAULT,
+            color: PRIMARY.DEFAULT,
+        },
+        focusedTitle: {
+            fontWeight: '600',
+            color: PRIMARY.DEFAULT,
+        },
+        hasValueTitle: {
+            color: BLACK,
+        },
+        hasValueInput: {
+            color: BLACK,
+            borderColor: BLACK,
+        },
+        icon: {
+            display: 'none',
         },
     }),
     
